@@ -105,3 +105,9 @@ venv.bak/
 
 # project specific
 /gen/**
+/run/**
+
+# jetbrains specific
+**/.idea/workspace.xml
+**/.idea/tasks.xml
+**/.idea/usage.statistics.xml
