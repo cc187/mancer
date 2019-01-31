@@ -1,6 +1,9 @@
 grammar mancer;
 
 /* lexer rules */
+WS : [ \r\n\t]+ -> skip ;
+EQUAL : '=' ;
+
 TIME : 'time' ;
 TIME_UNIT : 'h' | 'm' | 's' | 'ms' | 'us' | 'ns' ;
 
@@ -10,13 +13,8 @@ FLAG : '-'+[a-zA-Z_-]+ ;
 SET : 'set' ;
 RANGE : 'range' ;
 
-WS : [ \r\n\t]+ -> skip ;
-
-//NEWLINE : [\r\n]+ ;
-
-FLAG_SEP : '=';
 ID : [a-zA-Z_]+ ;
-
+NUMBER : '-'?[0-9]+('.'[0-9]+)? ;
 
 
 /* parser rules */
@@ -54,23 +52,25 @@ flagsList
 
 flagItem
     : FLAG
-    | FLAG FLAG_SEP ID
+    | FLAG EQUAL? ID
 //    | flagValue
-//    | FLAG FLAG_SEP flagValue
-    ;
-/*
-flagValue
-    : LITERAL
-    | STRING
-    | specialValue
+//    | FLAG EQUAL? flagValue
     ;
 
 specialValue
     : SET '(' literalList ')'
+    | RANGE '(' NUMBER ',' NUMBER (',' NUMBER)? ')'
     ;
 
 literalList
     : LITERAL
     | literalList ',' LITERAL
+    ;
+
+/*
+flagValue
+    : LITERAL
+    | STRING
+    | specialValue
     ;
     */
